@@ -1,0 +1,41 @@
+name: Build and verify
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  MAVEN_CLI_OPTS: >
+    -gs ./ci_settings.xml 
+    -Dmaven.repo.local=${GITHUB_WORKSPACE}/.m2/repository 
+    -Djavax.net.ssl.trustStore=./cacerts
+    --batch-mode
+    --errors
+
+jobs:
+  code_quality_analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+
+      - name: Cache Maven dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Code quality analysis
+        run: mvn clean verify $MAVEN_CLI_OPTS -T 2C

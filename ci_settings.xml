@@ -1,0 +1,25 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.2.0 https://maven.apache.org/xsd/settings-1.2.0.xsd">
+
+    <proxies>
+        <proxy>
+            <id>internal-proxy-http</id>
+            <active>true</active>
+            <protocol>http</protocol>
+            <port>8080</port>
+            <host>internal.proxy.com</host>
+            <nonProxyHosts>localhost|127.0.0.1|169.254.169.254|169.254.170.2|*.amazon.com|*.amazonaws.com|*.apache.org
+            </nonProxyHosts>
+        </proxy>
+        <proxy>
+            <id>internal-proxy-https</id>
+            <active>true</active>
+            <protocol>https</protocol>
+            <port>8080</port>
+            <host>internal.proxy.com</host>
+            <nonProxyHosts>localhost|127.0.0.1|169.254.169.254|169.254.170.2|*.amazon.com|*.amazonaws.com|*.apache.org
+            </nonProxyHosts>
+        </proxy>
+    </proxies>
+</settings>
